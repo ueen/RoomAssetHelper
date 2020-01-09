@@ -41,10 +41,20 @@ dependencies {
 
 `RoomAsset` is intended as a drop in alternative for the framework's [Room](https://developer.android.com/topic/libraries/architecture/room.html).
 
+You can use `RoomAsset` as you use `Room` but with two changes:
+
+1. Use `RoomAssetHelper.databaseBuilder()` instead of `Room.databaseBuilder()` 
+2. Also specify the version as last parameter in the databaseBuilder
+3. (optional) Specify the Table and columns you want to preserve
+
+```kotlin
+  val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", 2).build()
+  val employees = db.chinookDao().employees
+```
+
 `RoomAsset` relies upon asset file and folder naming conventions. Your `assets` folder will either be under your project root, or under `src/main` if you are using the default gradle project structure. At minimum, you must provide the following:
 
-* A `databases` folder inside `assets`
-* A SQLite database inside the `databases` folder whose file name matches the database name you provide in code (including the file extension, if any)
+* A SQLite database inside the `assets` folder whose file name matches the database name you provide in code (including the file extension, if any)
 
 For the example above, the project would contain the following:
 
@@ -52,14 +62,6 @@ For the example above, the project would contain the following:
 
 
 If you want to upgrade the database (destructive!), just increase the version number of the Database and in the databaseBuilder and overwrite the old Database in the assets (see below).
-
-The database will be extracted from the assets and copied into place within your application's private data directory. If you prefer to store the database file somewhere else (such as external storage) you can use the alternate constructor to specify a storage path. You must ensure that 
-is path is available and writable whenever your application needs to access the database.
-
-```kotlin
-  val db = RoomAsset.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db",
-        applicationContext.getExternalFilesDir(null).absolutePath).build()
-```
 
 The library will throw a `SQLiteAssetHelperException` if you do not provide the appropriately named file.
 
