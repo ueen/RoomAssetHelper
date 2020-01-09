@@ -51,7 +51,7 @@ You can use `RoomAsset` as you use `Room` but with two changes:
 4. (optional) Specify the Table and columns you want to preserve
 
 ```kotlin
-  val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", 2).build()
+  val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", 1).build()
   val employees = db.chinookDao().employees
 ```
 
