@@ -36,7 +36,7 @@ Add the dependency
 ```gradle
 dependencies {
     // ... other dependencies
-    implementation 'com.github.ueen:RoomAssetHelper:0.5'
+    implementation 'com.github.ueen:RoomAssetHelper:0.9'
 }
 ```
 -----
