@@ -55,7 +55,7 @@ class RoomAssetHelper {
 
         private fun copyFromAssets(context: Context, databaseName: String, databasePath: String, version: Int, preserve: Array<TablePreserve>) {
             val dbExists = doesDatabaseExist(context, databaseName)
-            
+
             //First Copy
             if (!dbExists) {
                 copyAssetFile(context, databaseName, databasePath)
@@ -93,8 +93,7 @@ class RoomAssetHelper {
                     copiedDB,
                     tp.table,
                     tp.preserveColumns,
-                    tp.extractColumns,
-                    tp.whereColumns,
+                    tp.macthByColumns,
                     true
                 )
             }
@@ -150,7 +149,6 @@ class RoomAssetHelper {
             newDatabase: SQLiteDatabase,
             tableName: String,
             columnsToPreserve: Array<String>,
-            columnsToExtract: Array<String>,
             whereClauseColumns: Array<String>,
             failWithException: Boolean
         ): Boolean {
@@ -188,26 +186,13 @@ class RoomAssetHelper {
                 }
                 return false
             }
-            for (pc in columnsToPreserve) {
-                var preserveColumnInExtractedColumn = false
-                for (ec in columnsToExtract) {
-                    if (pc == ec) preserveColumnInExtractedColumn = true
-                }
-                if (!preserveColumnInExtractedColumn) {
-                    if (failWithException) {
-                        val sbpc =
-                            StringBuilder().append("Column in Columns to Preserve not found in Columns to Extract. Cannot continuue." + "\n\tColumns to Preserve are :-")
-
-                    }
-                    throw RuntimeException("Column $pc is not int the Columns to Extract.")
-                }
-                return false
-            }
+            
             sb = StringBuilder()
             for (c in whereClauseColumns) {
                 sb.append(c).append("=? ")
             }
             val whereargs = arrayOfNulls<String>(whereClauseColumns.size)
+            val columnsToExtract = whereClauseColumns + columnsToPreserve
             csr = originalDatabase.query(
                 tableName,
                 columnsToExtract,
@@ -246,6 +231,5 @@ class RoomAssetHelper {
 class TablePreserve(
     val table: String,
     val preserveColumns: Array<String>,
-    val extractColumns: Array<String>,
-    val whereColumns: Array<String>
+    val macthByColumns: Array<String>
 )
