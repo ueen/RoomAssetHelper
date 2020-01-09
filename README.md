@@ -51,7 +51,11 @@ You can use `RoomAsset` as you use `Room` but with two changes:
 4. (optional) Specify the Table and columns you want to preserve
 
 ```kotlin
-  val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", 1).build()
+  val db = RoomAssetHelper.databaseBuilder(applicationContext, 
+  					   AppDatabase::class.java,
+					   "chinook.db",
+					   1)
+	   			.build()
 ```
 
 `RoomAsset` relies upon asset file and folder naming conventions. Your `assets` folder will either be under your project root, or under `src/main` if you are using the default gradle project structure. At minimum, you must provide the following:
@@ -65,7 +69,12 @@ For the example above, the project would contain the following:
 If your database is in a subfolder of `assets` you need to add the path relative to the assets folder in the `databaseBuilder` this might look like this
 
 ```kotlin
-  val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", databasePath = "databases/", 1).build()
+  val db = RoomAssetHelper.databaseBuilder(applicationContext,
+  					   AppDatabase::class.java,
+					   "chinook.db",
+					   databasePath = "databases/",
+					   1)
+				.build()
 ```
 
 # Selective Migration
@@ -84,7 +93,14 @@ Important note: The original, as well as the new database must contain the colum
 So in the end it might look something like this
 
 ```kotlin
-  val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", 1, preserve = arrayOf(TablePreserve(table = "yourTable",preserveColumns = arrayOf("yourColumn"),macthByColumns = arrayOf("id")))).build()
+  val db = RoomAssetHelper.databaseBuilder(applicationContext,
+  					   AppDatabase::class.java, 
+					   "chinook.db",
+					   1,
+					   preserve = arrayOf(TablePreserve(table = "yourTable",
+					   				    preserveColumns = arrayOf("yourColumn"),
+									    macthByColumns = arrayOf("id"))))
+				.build()
 ```
 
 # Upgrade Database
@@ -92,7 +108,11 @@ So in the end it might look something like this
 If you want to upgrade the database, overwrite the old Database in the assets and increase the version number of the Database AND in the databaseBuilder, like this
 
 ```kotlin
-  val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", version = 2).build()
+  val db = RoomAssetHelper.databaseBuilder(applicationContext,
+  					   AppDatabase::class.java, 
+					   "chinook.db", 
+					   version = 2)
+				.build()
 ```
 
 The library will throw a `SQLiteAssetHelperException` if you do not provide the appropriately named file.
