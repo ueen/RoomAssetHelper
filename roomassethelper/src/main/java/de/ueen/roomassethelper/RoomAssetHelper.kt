@@ -194,8 +194,8 @@ class RoomAssetHelper {
             csr = originalDatabase.query(
                 tableName,
                 columnsToExtract,
-                sb.toString(),
-                whereClauseColumns,
+                null,
+                null,
                 null,
                 null,
                 null
