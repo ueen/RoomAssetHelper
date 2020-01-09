@@ -207,7 +207,7 @@ class RoomAssetHelper {
             for (c in whereClauseColumns) {
                 sb.append(c).append("=? ")
             }
-            val whereargs = arrayOfNullges<String>(whereClauseColumns.size)
+            val whereargs = arrayOfNulls<String>(whereClauseColumns.size)
             csr = originalDatabase.query(
                 tableName,
                 columnsToExtract,
