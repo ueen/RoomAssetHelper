@@ -30,7 +30,7 @@ class RoomAssetHelper {
                 : RoomDatabase.Builder<T> {
 
             if (getDBVersion(context, name) < version) {
-                copyFromAssets(context, true, name, databasePath, version, preserve);
+                copyFromAssets(context, name, databasePath, version, preserve);
             }
 
             val builder = Room.databaseBuilder(context, klass, name)
@@ -53,11 +53,11 @@ class RoomAssetHelper {
             return false
         }
 
-        private fun copyFromAssets(context: Context, replaceExisting: Boolean, databaseName: String, databasePath: String, version: Int, preserve: Array<TablePreserve>) {
+        private fun copyFromAssets(context: Context, databaseName: String, databasePath: String, version: Int, preserve: Array<TablePreserve>) {
             val dbExists = doesDatabaseExist(context, databaseName)
-            if (dbExists && !replaceExisting) return
+            
             //First Copy
-            if (!replaceExisting) {
+            if (!dbExists) {
                 copyAssetFile(context, databaseName, databasePath)
                 setDBVersion(context, databaseName, version)
                 return
