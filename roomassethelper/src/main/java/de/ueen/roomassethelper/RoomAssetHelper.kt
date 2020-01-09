@@ -24,12 +24,13 @@ class RoomAssetHelper {
             context: Context,
             klass: Class<T>,
             name: String,
+            databasePath: String = "",
             version: Int,
             preserve: Array<TablePreserve> = emptyArray())
                 : RoomDatabase.Builder<T> {
 
             if (getDBVersion(context, name) < version) {
-                copyFromAssets(context, true, name, version, preserve);
+                copyFromAssets(context, true, name, databasePath, version, preserve);
             }
 
             val builder = Room.databaseBuilder(context, klass, name)
@@ -52,12 +53,12 @@ class RoomAssetHelper {
             return false
         }
 
-        private fun copyFromAssets(context: Context, replaceExisting: Boolean, databaseName: String, version: Int, preserve: Array<TablePreserve>) {
+        private fun copyFromAssets(context: Context, replaceExisting: Boolean, databaseName: String, databasePath: String, version: Int, preserve: Array<TablePreserve>) {
             val dbExists = doesDatabaseExist(context, databaseName)
             if (dbExists && !replaceExisting) return
             //First Copy
             if (!replaceExisting) {
-                copyAssetFile(context, databaseName)
+                copyAssetFile(context, databaseName, databasePath)
                 setDBVersion(context, databaseName, version)
                 return
             }
@@ -76,7 +77,7 @@ class RoomAssetHelper {
                 .renameTo(preservedDBPath)
 
             //2. Copy the replacement database from the assets folder
-            copyAssetFile(context,databaseName)
+            copyAssetFile(context,databaseName, databasePath)
 
             //3. Open the newly copied database
             val copiedDB =
@@ -106,10 +107,10 @@ class RoomAssetHelper {
             preservedDBPath.delete()
         }
 
-        private fun copyAssetFile(context: Context, databaseName: String) {
+        private fun copyAssetFile(context: Context, databaseName: String, databasePath: String) {
             try {
                 context.assets.open(databaseName).use { stream ->
-                    File(context.getDatabasePath(databaseName).path).outputStream().use {
+                    File(context.getDatabasePath(databasePath+databaseName).path).outputStream().use {
                         stream.copyTo(it)
                     }
                 }
