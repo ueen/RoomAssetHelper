@@ -122,6 +122,9 @@ class RoomAssetHelper {
         }
 
         private fun getDBVersion(context: Context, databaseName: String): Int {
+            if (!doesDatabaseExist(context, databaseName)) {
+                return 0
+            }
             val db = SQLiteDatabase.openDatabase(
                 context.getDatabasePath(databaseName).path,
                 null,
@@ -204,7 +207,7 @@ class RoomAssetHelper {
             for (c in whereClauseColumns) {
                 sb.append(c).append("=? ")
             }
-            val whereargs = arrayOfNulls<String>(whereClauseColumns.size)
+            val whereargs = arrayOfNullges<String>(whereClauseColumns.size)
             csr = originalDatabase.query(
                 tableName,
                 columnsToExtract,
