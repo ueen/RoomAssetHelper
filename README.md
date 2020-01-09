@@ -45,7 +45,8 @@ You can use `RoomAsset` as you use `Room` but with two changes:
 
 1. Use `RoomAssetHelper.databaseBuilder()` instead of `Room.databaseBuilder()` 
 2. Also specify the version as last parameter in the databaseBuilder
-3. (optional) Specify the Table and columns you want to preserve
+3. (optional) Specify a path under "assets" like "databases/"
+4. (optional) Specify the Table and columns you want to preserve
 
 ```kotlin
   val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", 2).build()
