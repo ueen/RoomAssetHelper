@@ -39,7 +39,7 @@ dependencies {
     implementation 'com.github.ueen:RoomAssetHelper:0.9'
 }
 ```
------
+# Basic Usage
 
 `RoomAsset` is intended as a drop in alternative for the framework's [Room](https://developer.android.com/topic/libraries/architecture/room.html).
 
@@ -47,12 +47,11 @@ You can use `RoomAsset` as you use `Room` but with two changes:
 
 1. Use `RoomAssetHelper.databaseBuilder()` instead of `Room.databaseBuilder()` 
 2. Also specify the version as last parameter in the databaseBuilder
-3. (optional) Specify a path under "assets" like "databases/"
+3. (optional) Specify a path under "assets" like `databases/"`
 4. (optional) Specify the Table and columns you want to preserve
 
 ```kotlin
   val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", 1).build()
-  val employees = db.chinookDao().employees
 ```
 
 `RoomAsset` relies upon asset file and folder naming conventions. Your `assets` folder will either be under your project root, or under `src/main` if you are using the default gradle project structure. At minimum, you must provide the following:
@@ -61,10 +60,38 @@ You can use `RoomAsset` as you use `Room` but with two changes:
 
 For the example above, the project would contain the following:
 
-    assets/databases/chinook.db
+    assets/chinook.db
+   
+If your database is in a subfolder of `assets` you need to add the path relative to the assets folder in the `databaseBuilder` this might look like this
 
+```kotlin
+  val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", databasePath = "databases/", 1).build()
+```
 
-If you want to upgrade the database (destructive!), just increase the version number of the Database and in the databaseBuilder and overwrite the old Database in the assets (see below).
+# Selective Migration
+
+To preserve certain columns in your Database on the device (eg user data) you can add them in the `databaseBuilder` according to this schema
+
+TablePreserve
+	table: String 			//name of the table in which columns should be preserved
+	preserveColumns: Array<String>, //name(s) of the columns which should be preserved on the device
+    	macthByColumns: Array<String>	//unique identifier(s) (typically a `id` column) to match the rows
+	
+Important note: The original, as well as the new database must contain the columns you want to preserve and match by!
+
+So in the end it might look something like this
+
+```kotlin
+  val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", 1, preserve = arrayOf(TablePreserve(table = "yourTable",preserveColumns = arrayOf("yourColumn"),macthByColumns = arrayOf("id")))).build()
+```
+
+# Upgrade Database
+
+If you want to upgrade the database, overwrite the old Database in the assets and increase the version number of the Database AND in the databaseBuilder, like this
+
+```kotlin
+  val db = RoomAssetHelper.databaseBuilder(applicationContext, AppDatabase::class.java, "chinook.db", version = 2).build()
+```
 
 The library will throw a `SQLiteAssetHelperException` if you do not provide the appropriately named file.
 
