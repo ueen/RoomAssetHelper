@@ -72,10 +72,12 @@ If your database is in a subfolder of `assets` you need to add the path relative
 
 To preserve certain columns in your Database on the device (eg user data) you can add them in the `databaseBuilder` according to this schema
 
+```
 TablePreserve
 	table: String 			//name of the table in which columns should be preserved
 	preserveColumns: Array<String>, //name(s) of the columns which should be preserved on the device
     	macthByColumns: Array<String>	//unique identifier(s) (typically a `id` column) to match the rows
+```
 	
 Important note: The original, as well as the new database must contain the columns you want to preserve and match by!
 
