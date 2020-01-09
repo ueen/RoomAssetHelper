@@ -1,5 +1,7 @@
 # RoomAsset with selective Migration!
 
+Thanks to MikeT https://stackoverflow.com/a/59637092/3123142
+
 An Android helper class to manage database creation and version management using an application's raw asset files.
 
 This library provides developers with a simple way to ship their Android app with an existing SQLite database (which may be pre-populated with data) and to manage its initial creation and any upgrades required with subsequent version releases.
