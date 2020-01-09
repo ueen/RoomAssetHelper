@@ -29,9 +29,7 @@ class RoomAssetHelper {
             preserve: Array<TablePreserve> = emptyArray())
                 : RoomDatabase.Builder<T> {
 
-            if (getDBVersion(context, name) < version) {
-                copyFromAssets(context, name, databasePath, version, preserve);
-            }
+            if (getDBVersion(context, name) < version) copyFromAssets(context, name, databasePath, version, preserve)
 
             val builder = Room.databaseBuilder(context, klass, name)
 
@@ -88,7 +86,7 @@ class RoomAssetHelper {
             //4. Apply preserved data to the newly copied data
             copiedDB.beginTransaction()
             for (tp in preserve) {
-                val preserveTableColumns = preserveTableColumns(
+                preserveTableColumns(
                     preservedDB,
                     copiedDB,
                     tp.table,
@@ -180,13 +178,13 @@ class RoomAssetHelper {
                 sb.append("\n\tTable ").append(tableName).append(" not found in database ")
                     .append(originalDatabase.path)
             }
-            if (sb.length > 0) {
+            if (sb.isNotEmpty()) {
                 if (failWithException) {
                     throw RuntimeException("Both databases are required to have a table named $tableName$sb")
                 }
                 return false
             }
-            
+
             sb = StringBuilder()
             for (c in whereClauseColumns) {
                 sb.append(c).append("=? ")
