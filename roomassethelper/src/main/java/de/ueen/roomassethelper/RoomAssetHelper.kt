@@ -109,8 +109,8 @@ class RoomAssetHelper {
 
         private fun copyAssetFile(context: Context, databaseName: String, databasePath: String) {
             try {
-                context.assets.open(databaseName).use { stream ->
-                    File(context.getDatabasePath(databasePath+databaseName).path).outputStream().use {
+                context.assets.open(databasePath+databaseName).use { stream ->
+                    File(context.getDatabasePath(databaseName).path).outputStream().use {
                         stream.copyTo(it)
                     }
                 }
