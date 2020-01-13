@@ -91,7 +91,7 @@ class RoomAssetHelper {
                     copiedDB,
                     tp.table,
                     tp.preserveColumns,
-                    tp.macthByColumns,
+                    tp.matchByColumns,
                     true
                 )
             }
