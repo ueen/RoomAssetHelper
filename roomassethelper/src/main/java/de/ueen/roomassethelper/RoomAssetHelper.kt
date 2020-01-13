@@ -229,5 +229,5 @@ class RoomAssetHelper {
 class TablePreserve(
     val table: String,
     val preserveColumns: Array<String>,
-    val macthByColumns: Array<String>
+    val matchByColumns: Array<String>
 )
