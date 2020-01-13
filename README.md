@@ -119,6 +119,7 @@ Supported data types: `TEXT`, `INTEGER`, `REAL`, `BLOB`
 
 
 Thanks to humazed and his original RoomAsset library that this library was based on and inspired by.
+https://github.com/humazed/RoomAsset
 
 
 License
