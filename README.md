@@ -36,7 +36,7 @@ Add the dependency
 ```gradle
 dependencies {
     // ... other dependencies
-    implementation 'com.github.ueen:RoomAssetHelper:0.9'
+    implementation 'com.github.ueen:RoomAssetHelper:1.0'
 }
 ```
 # Basic Usage
@@ -85,7 +85,7 @@ To preserve certain columns in your Database on the device (eg user data) you ca
 TablePreserve
 	table: String 			//name of the table in which columns should be preserved
 	preserveColumns: Array<String>, //name(s) of the columns which should be preserved on the device
-    	macthByColumns: Array<String>	//unique identifier(s) (typically a `id` column) to match the rows
+    	matchByColumns: Array<String>	//unique identifier(s) (typically a `id` column) to match the rows
 ```
 	
 Important note: The original, as well as the new database must contain the columns you want to preserve and match by!
@@ -99,7 +99,7 @@ So in the end it might look something like this
 					   1,
 					   preserve = arrayOf(TablePreserve(table = "yourTable",
 					   				    preserveColumns = arrayOf("yourColumn"),
-									    macthByColumns = arrayOf("id"))))
+									    matchByColumns = arrayOf("id"))))
 				.build()
 ```
 
@@ -115,14 +115,10 @@ If you want to upgrade the database, overwrite the old Database in the assets an
 				.build()
 ```
 
-The library will throw a `SQLiteAssetHelperException` if you do not provide the appropriately named file.
-
 Supported data types: `TEXT`, `INTEGER`, `REAL`, `BLOB`
 
 
-The [sample](https://github.com/humazed/RoomAsset/tree/master/sample) project demonstrates a simple database creation and usage example using the classic [Chinook database](http://www.sqlitetutorial.net/sqlite-sample-database).
-
-
+Thanks to humazed and his original RoomAsset library that this library was based on and inspired by.
 
 
 License
