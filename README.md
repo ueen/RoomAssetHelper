@@ -12,14 +12,9 @@ It is implemented as an extension to `Room`, providing an easy way to use `Room`
 
 # Gradle Dependency
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b2a019a18e3a48e5b50ae4a5f1ed3135)](https://www.codacy.com/app/humazed/RoomAsset?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=humazed/RoomAsset&amp;utm_campaign=Badge_Grade)
-[![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-RoomAsset-green.svg?style=flat )]( https://android-arsenal.com/details/1/6421 )
-[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0.html)
-
-
 ### Dependency
 
-Add this to your module's `build.gradle` file (make sure the version matches the last [release](https://github.com/ueen/RoomAsset/releases/latest)):
+Add this to your module's `build.gradle` file (make sure the version matches the last [release](https://github.com/ueen/RoomAssetHelper/releases/latest)):
 
 Add it in your root build.gradle at the end of repositories:
 
@@ -36,7 +31,7 @@ Add the dependency
 ```gradle
 dependencies {
     // ... other dependencies
-    implementation 'com.github.ueen:RoomAssetHelper:1.2.1'
+    implementation 'com.github.ueen:RoomAssetHelper:1.1'
 }
 ```
 # Basic Usage
